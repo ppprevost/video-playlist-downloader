@@ -1,5 +1,24 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    h1= title
+    p Welcome to #{title}
+    form(method="post" action="/api/playlist")
+        //label(for="input-playlist") Charger la playlist
+        input(type='text' id="input-playlist" name="input-playlist")
+        button(type="submit") telecharger la playlist
+
+        script.
+          const formLogin = document.querySelector('#input-playlist');
+            formLogin.addEventListener('submit', function(event) {
+            const formData = new FormData(formLogin);
+            console.log('Contenido de Formulario: ', formData);
+            event.preventDefault();
+                fetch('/signin', {
+                method: 'POST',
+                //body: formData
+                })
+            //- .then(function(res) {
+            //-     res.json();
+            //- })
+});

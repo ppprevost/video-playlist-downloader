@@ -12,7 +12,7 @@ var app = express();
 
 
 var youtubedl = require('youtube-dl');
-var ytdl = require('youtube-dl');
+
 var fs = require('fs');
 /*var url1 = 'http://www.youtube.com/watch?v=WKsjaOqDXgg';
 var url2 = 'http://www.youtube.com/watch?v=90AiXO1pAiA';
@@ -41,48 +41,9 @@ video.on('end', function() {
 video.pipe(fs.createWriteStream('myvideo.mp4'));*/
 
 
-function playlist(url) {
 
-  'use strict';
-  var video = ytdl(url);
 
-  video.on('error', function error(err) {
-    console.log('error 2:', err);
-  });
-
-  var size = 0;
-  video.on('info', function(info) {
-    const webpageURL = info.webpage_url
-    ytdl.exec(webpageURL, ['-x', '--audio-format', 'mp3', '-f', 'bestaudio', '-o', "~/Desktop/test/%(title)s.%(ext)s"], {}, function exec(err, output) {
-      'use strict';
-      if (err) {
-        throw err;
-      }
-      console.log(output.join('\n'));
-    });
-  });
-
-  var pos = 0;
-  video.on('data', function data(chunk) {
-    pos += chunk.length;
-    // `size` should not be 0 here.
-    if (size) {
-      var percent = (pos / size * 100).toFixed(2);
-      process.stdout.cursorTo(0);
-      process.stdout.clearLine(1);
-      process.stdout.write(percent + '%');
-    }
-  });
-
-  video.on('end', function() {
-    console.log('finished downloading the file!');
-  });
-
-  video.on('next', playlist);
-
-}
-
-playlist('https://www.youtube.com/playlist?list=PL5hJHQYnvenenvvXSUqoDoHpMod4t6p9a')
+//playlist('https://www.youtube.com/playlist?list=PL5hJHQYnvenenvvXSUqoDoHpMod4t6p9a')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
